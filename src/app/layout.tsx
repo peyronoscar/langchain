@@ -30,6 +30,8 @@ import { TopPSelector } from "@/components/layout/top-p-selector";
 import { models, types } from "@/data/models";
 import { presets } from "@/data/presets";
 import { Toaster } from "sonner";
+import { ThemeProvider } from "next-themes";
+import { ModeToggle } from "@/components/layout/mode-toggle";
 
 const fontSans = FontSans({
   subsets: ["latin"],
@@ -70,23 +72,31 @@ export default function RootLayout({
           fontSans.variable,
         )}
       >
-        <div className="container flex flex-col items-start justify-between py-4 space-y-2 sm:flex-row sm:items-center sm:space-y-0 md:h-16">
-          <h2 className="text-lg font-semibold">Playground</h2>
-          <div className="flex w-full ml-auto space-x-2 sm:justify-end">
-            <PresetSelector presets={presets} />
-            <PresetSave />
-            <div className="hidden space-x-2 md:flex">
-              <CodeViewer />
-              <PresetShare />
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <div className="container flex flex-col items-start justify-between py-4 space-y-2 sm:flex-row sm:items-center sm:space-y-0 md:h-16">
+            <h2 className="text-lg font-semibold">Playground</h2>
+            <div className="flex w-full ml-auto space-x-2 sm:justify-end">
+              <PresetSelector presets={presets} />
+              <PresetSave />
+              <div className="hidden space-x-2 md:flex">
+                <CodeViewer />
+                <PresetShare />
+              </div>
+              <PresetActions />
+              <ModeToggle />
             </div>
-            <PresetActions />
           </div>
-        </div>
-        <Separator />
-        <div className="container flex-1 min-h-0 py-6">
-          <main className="flex h-full gap-6">{children}</main>
-        </div>
-        <Toaster />
+          <Separator />
+          <div className="container flex-1 min-h-0 py-6">
+            <main className="flex h-full gap-6">{children}</main>
+          </div>
+          <Toaster />
+        </ThemeProvider>
       </body>
     </html>
   );

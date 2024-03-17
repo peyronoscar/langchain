@@ -85,9 +85,9 @@ export function ChatWindow(props: {
     <>
       <div className="flex-1 h-full p-0 mt-0 border-0">
         <div className="h-full">
-          <div className="flex flex-col w-full h-full mb-4">
+          <div className="flex flex-col w-full h-full p-4 border rounded-lg">
             {messages.length > 0 ? (
-              <ScrollArea className="flex-1 min-h-0 p-4 border rounded-lg">
+              <ScrollArea className="flex-1 min-h-0">
                 <div className="flex flex-col">
                   {[...messages].reverse().map((m, i) => {
                     const sourceKey = (messages.length - 1 - i).toString();
