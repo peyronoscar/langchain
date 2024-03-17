@@ -84,41 +84,18 @@ export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
     const messages = body.messages ?? [];
+    const temperature = body.temperature ?? 0.2;
+    const maxTokens = body.maxTokens ?? 100;
+    const modelName = body.modelName ?? "gpt-3.5-turbo-1106";
+    const topP = body.topP ?? 0.5;
     const previousMessages = messages.slice(0, -1);
     const currentMessageContent = messages[messages.length - 1].content;
 
-    const functionSchema = [
-      {
-        name: "article",
-        description: "An article",
-        parameters: {
-          type: "object",
-          properties: {
-            title: {
-              type: "string",
-              description: "The title of the article.",
-            },
-            short_answer: {
-              type: "string",
-              description: "A short answer that summarizes the article.",
-            },
-            content: {
-              type: "string",
-              description: "The content of the article ment for the public.",
-            },
-            internalContent: {
-              type: "string",
-              description: "The internal content of the article ment for the internal staff.",
-            },
-          },
-          required: ["title", "short_answer", "content", "internalContent"],
-        },
-      },
-    ];
-
     const model = new ChatOpenAI({
-      modelName: "gpt-3.5-turbo-1106",
-      temperature: 0.2,
+      modelName,
+      temperature,
+      maxTokens,
+      topP
     });
 
     const client = createClient(
@@ -167,14 +144,15 @@ export async function POST(req: NextRequest) {
 
     const answerChain = RunnableSequence.from([
       {
-        search_result: RunnableSequence.from([
-          (input) => input.question,
-          new SerpAPI(),
-          (search) => {
-            searchResult = search;
-            return search;
-          }
-        ]),
+        // search_result: RunnableSequence.from([
+        //   (input) => input.question,
+        //   new SerpAPI(),
+        //   (search) => {
+        //     searchResult = search;
+        //     return search;
+        //   }
+        // ]),
+        search_result: (input) => "",
         context: RunnableSequence.from([
           (input) => input.question,
           retrievalChain,
