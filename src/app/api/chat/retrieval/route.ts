@@ -144,15 +144,15 @@ export async function POST(req: NextRequest) {
 
     const answerChain = RunnableSequence.from([
       {
-        // search_result: RunnableSequence.from([
-        //   (input) => input.question,
-        //   new SerpAPI(),
-        //   (search) => {
-        //     searchResult = search;
-        //     return search;
-        //   }
-        // ]),
-        search_result: (input) => "",
+        search_result: RunnableSequence.from([
+          (input) => input.question,
+          new SerpAPI(),
+          (search) => {
+            console.log(search)
+            searchResult = search;
+            return search;
+          }
+        ]),
         context: RunnableSequence.from([
           (input) => input.question,
           retrievalChain,
@@ -184,7 +184,7 @@ export async function POST(req: NextRequest) {
       JSON.stringify(
         documents.map((doc) => {
           return {
-            pageContent: doc.pageContent.slice(0, 50) + "...",
+            pageContent: doc.pageContent.slice(0, 200) + "...",
             metadata: doc.metadata,
           };
         }),

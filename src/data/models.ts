@@ -139,4 +139,14 @@ export const models: Model<ModelType>[] = [
       "Parsing text, simple classification, address correction, keywords",
     maxTokens: 4096
   },
+  {
+    id: "be638fb1-973b-4471-a49c-290325085803",
+    name: "ft:gpt-3.5-turbo-1106:personal:ft-test:93nFOKmK",
+    description:
+      "Similar capabilities as GPT-3 era models. Compatible with legacy Completions endpoint and not Chat Completions.",
+    type: "GPT-3",
+    strengths:
+      "Parsing text, simple classification, address correction, keywords",
+    maxTokens: 4096
+  },
 ]

@@ -6,6 +6,9 @@ import { SupabaseVectorStore } from "langchain/vectorstores/supabase";
 import { OpenAIEmbeddings } from "langchain/embeddings/openai";
 import { TextLoader } from "langchain/document_loaders/fs/text";
 import { DirectoryLoader } from "langchain/document_loaders/fs/directory";
+import { JSONLoader } from "langchain/document_loaders/fs/json";
+import fs from "fs"
+
 
 // Before running, follow set-up instructions at
 // https://js.langchain.com/docs/modules/indexes/vector_stores/integrations/supabase
@@ -37,7 +40,7 @@ export async function POST(req: NextRequest) {
     const loader = new DirectoryLoader(
       "src/document_loaders",
       {
-        // ".json": (path) => new JSONLoader(path, "/texts"),
+        // ".json": (path) => new JSONLoader(path, [""]),
         // ".jsonl": (path) => new JSONLinesLoader(path, "/html"),
         ".txt": (path) => new TextLoader(path),
       }
@@ -45,14 +48,40 @@ export async function POST(req: NextRequest) {
 
     const docs = await loader.load();
 
+    // const data = JSON.parse(fs.readFileSync("/Users/oscarpeyron/Documents/Studier/langchain/src/document_loaders/data.json", 'utf8'));
+
+    // // Initialize an empty string to accumulate the content
+    // let allContent = '';
+
+    // // Function to add each object's content to the allContent string
+    // data.forEach((doc, index) => {
+    //   const { title, summary_text, content_text, ikea_internal_text } = doc;
+    //   allContent += `Title: ${title}\nSummary: ${summary_text}\nContent: ${content_text}\nInternal text: ${ikea_internal_text}`;
+
+    //   // Add a separator between articles, but not after the last one
+    //   if (index < data.length - 1) {
+    //     allContent += "\n\n";
+    //   }
+    // });
+
+    // // Specify the filename for the consolidated file
+    // const filename = 'all_articles.txt';
+
+    // // Write the accumulated content to the file
+    // fs.writeFileSync(filename, allContent, 'utf8');
+    // console.log(`All content has been written to ${filename}.`);
+
+
+    // return;
+
     const client = createClient(
       process.env.SUPABASE_URL!,
       process.env.SUPABASE_PRIVATE_KEY!,
     );
 
     const splitter = RecursiveCharacterTextSplitter.fromLanguage("markdown", {
-      chunkSize: 256,
-      chunkOverlap: 20,
+      chunkSize: 1024,
+      chunkOverlap: 100,
     });
 
     for (const doc of docs) {
@@ -68,6 +97,8 @@ export async function POST(req: NextRequest) {
           queryName: "match_documents",
         },
       );
+
+      console.log({ vectorstore })
     }
 
     return NextResponse.json({ ok: true }, { status: 200 });

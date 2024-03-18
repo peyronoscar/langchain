@@ -25,7 +25,7 @@ export function TemperatureSelector({ onValueChange, value }: SliderProps) {
             </div>
             <Slider
               id="temperature"
-              max={1}
+              max={2}
               defaultValue={value}
               step={0.1}
               onValueChange={onValueChange}
