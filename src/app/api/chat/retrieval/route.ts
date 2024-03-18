@@ -7,7 +7,10 @@ import { ChatOpenAI, OpenAIEmbeddings } from "@langchain/openai";
 import { PromptTemplate } from "@langchain/core/prompts";
 import { SupabaseVectorStore } from "@langchain/community/vectorstores/supabase";
 import { Document } from "@langchain/core/documents";
-import { RunnableSequence, RunnablePassthrough } from "@langchain/core/runnables";
+import {
+  RunnableSequence,
+  RunnablePassthrough,
+} from "@langchain/core/runnables";
 import {
   BytesOutputParser,
   StringOutputParser,
@@ -48,7 +51,7 @@ const condenseQuestionPrompt = PromptTemplate.fromTemplate(
   CONDENSE_QUESTION_TEMPLATE,
 );
 
-const ANSWER_TEMPLATE = `You are an author of articles for IKEA's Swedish internal documentation. The articles you write must be based on the facts provided and formatted to conform to IKEA's brand voice and content guidelines. You only write articles for the FAQ category.
+const ANSWER_TEMPLATE = `You are an author of articles for IKEA's Swedishy documentation. The articles you write must be based on the facts provided and formatted to conform to IKEA's brand voice and content guidelines. You only write articles for the FAQ category.
 
 Divide all articles into the following parts:
 - Title
@@ -95,7 +98,7 @@ export async function POST(req: NextRequest) {
       modelName,
       temperature,
       maxTokens,
-      topP
+      topP,
     });
 
     const client = createClient(
@@ -138,7 +141,7 @@ export async function POST(req: NextRequest) {
       ],
     });
 
-    const retrievalChain = retriever.pipe(combineDocumentsFn)
+    const retrievalChain = retriever.pipe(combineDocumentsFn);
 
     let searchResult: string = "";
 
@@ -148,10 +151,10 @@ export async function POST(req: NextRequest) {
           (input) => input.question,
           new SerpAPI(),
           (search) => {
-            console.log(search)
+            console.log(search);
             searchResult = search;
             return search;
-          }
+          },
         ]),
         context: RunnableSequence.from([
           (input) => input.question,
@@ -161,7 +164,7 @@ export async function POST(req: NextRequest) {
         question: (input) => input.question,
       },
       answerPrompt,
-      model
+      model,
     ]);
 
     const conversationalRetrievalQAChain = RunnableSequence.from([
@@ -199,7 +202,7 @@ export async function POST(req: NextRequest) {
       },
     });
   } catch (e: any) {
-    console.log(e)
+    console.log(e);
     return NextResponse.json({ error: e.message }, { status: e.status ?? 500 });
   }
 }
