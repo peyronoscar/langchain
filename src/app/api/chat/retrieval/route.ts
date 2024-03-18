@@ -51,7 +51,7 @@ const condenseQuestionPrompt = PromptTemplate.fromTemplate(
   CONDENSE_QUESTION_TEMPLATE,
 );
 
-const ANSWER_TEMPLATE = `You are an author of articles for IKEA's Swedish documentation. The articles you write must be based on the facts provided and formatted to conform to IKEA's brand voice and content guidelines. You only write articles for the FAQ category.
+const ANSWER_TEMPLATE = `You are an author of articles for IKEA's Swedishy documentation. The articles you write must be based on the facts provided and formatted to conform to IKEA's brand voice and content guidelines. You only write articles for the FAQ category.
 
 Divide all articles into the following parts:
 - Title
