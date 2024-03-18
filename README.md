@@ -82,7 +82,7 @@ use case docs, but you can change them to whatever text you'd like.
 For a given text, you'll only need to press `Upload` once. Pressing it again will re-ingest the docs, resulting in duplicates.
 You can clear your Supabase vector store by navigating to the console and running `DELETE FROM documents;`.
 
-After splitting, embedding, and uploading some text, you're ready to ask questions!
+After splitting, embedding, and uploading some text, you're ready to ask questions!!
 
 ![A streaming conversation between the user and an AI retrieval chain](/public/images/retrieval-chain-conversation.png)
 
