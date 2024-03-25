@@ -112,9 +112,8 @@ export function ChatWindow(props: {
               <div className="flex flex-col items-center gap-4 p-5 mt-auto text-center rounded-lg">
                 <QuestionMarkCircledIcon className="size-10" />
                 <p className="text-lg text-center">
-                  {titleText} is ready to chat!
+                  {titleText}
                   <br />
-                  Ask a question.
                 </p>
               </div>
             )}

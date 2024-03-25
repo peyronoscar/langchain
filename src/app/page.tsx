@@ -4,11 +4,9 @@ export default function AgentsPage() {
   return (
     <ChatWindow
       endpoint="api/chat/retrieval"
-      placeholder={
-        'I\'ve got a nose for finding the right documents! Ask, "What is a document loader?"'
-      }
+      placeholder={"Write your question here..."}
       emoji="🐶"
-      titleText="Dana the Document-Retrieving Dog"
+      titleText="Ask me anything regarding IKEA and I will generate an article for you!"
     ></ChatWindow>
   );
 }
