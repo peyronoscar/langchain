@@ -1,12 +1,14 @@
 import { ChatWindow } from "@//components/ChatWindow";
 
-export default function Home() {
+export default function AgentsPage() {
   return (
     <ChatWindow
-      endpoint="api/chat"
-      emoji="🏴‍☠️"
-      titleText="Patchy the Chatty Pirate"
-      placeholder="I'm an LLM pretending to be a pirate! Ask me about the pirate life!"
-    />
+      endpoint="api/chat/retrieval"
+      placeholder={
+        'I\'ve got a nose for finding the right documents! Ask, "What is a document loader?"'
+      }
+      emoji="🐶"
+      titleText="Dana the Document-Retrieving Dog"
+    ></ChatWindow>
   );
 }
