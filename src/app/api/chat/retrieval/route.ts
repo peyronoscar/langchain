@@ -64,17 +64,17 @@ Answer the question based only on the following context and chat history:
   {context}
 </context>
 
-The search result comes from the internet. Prioritize the context above the search results if the information is contradictory.
-<search_result>
-  {search_result}
-</search_result>
-
 <chat_history>
   {chat_history}
 </chat_history>
 
 Instructions: {question}
 `;
+
+// The search result comes from the internet.Prioritize the context above the search results if the information is contradictory.
+// <search_result>
+// { search_result }
+// </search_result>
 const answerPrompt = PromptTemplate.fromTemplate(ANSWER_TEMPLATE);
 
 /**
@@ -147,15 +147,15 @@ export async function POST(req: NextRequest) {
 
     const answerChain = RunnableSequence.from([
       {
-        search_result: RunnableSequence.from([
-          (input) => input.question,
-          new SerpAPI(),
-          (search) => {
-            console.log(search);
-            searchResult = search;
-            return search;
-          },
-        ]),
+        // search_result: RunnableSequence.from([
+        //   (input) => input.question,
+        //   new SerpAPI(),
+        //   (search) => {
+        //     console.log(search);
+        //     searchResult = search;
+        //     return search;
+        //   },
+        // ]),
         context: RunnableSequence.from([
           (input) => input.question,
           retrievalChain,
